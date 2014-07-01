@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="100"
+			   creationComplete="application_creationCompleteHandler(event)"
+			   >
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			
+			import w11k.flash.AngularJSAdapter;
+			
+			private var angularjs :AngularJSAdapter;
+			
+			protected function application_creationCompleteHandler(event:FlexEvent) :void {
+				angularjs = AngularJSAdapter.getInstance();
+				
+				this.currentState = defaultState.name;
+				ExternalInterface.addCallback("navigateTo", setState);
+				
+				angularjs.fireFlashReady();
+			}
+			
+			protected function setState(state :String) :void {
+				this.currentState = state;
+			}
+			
+			[Bindable]
+			private var text :String = "";
+			
+			protected function button_clickHandler() :void {
+				text = "";
+				text += angularjs.call('talkToMe("Flex")');
+				text += " ";
+				text += angularjs.call('talkToMe(name)', { name: 'Again' });
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:states>
+		<s:State name="default" id="defaultState" />
+		<s:State name="content1" />
+		<s:State name="content2" />
+	</s:states>
+	
+	<s:Group width="100%" height="100%" textAlign="center">
+		<s:VGroup includeIn="default" width="100%" height="100%">
+			<s:Button click="button_clickHandler()">Talk to AngularJS</s:Button>
+			<s:Label text="{text}" />
+		</s:VGroup>
+		<s:Label includeIn="content1">Content 1</s:Label>
+		<s:Label includeIn="content2">Content 2</s:Label>
+	</s:Group>
+</s:Application>
