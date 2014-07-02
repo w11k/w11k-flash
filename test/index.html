@@ -4,23 +4,14 @@
     <script type="text/javascript" src="../bower_components/swfobject/swfobject/swfobject.js"></script>
     <script type="text/javascript" src="../src/js/w11k-flash.js"></script>
 
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../dist/js/w11k-flash.css"/>
-
-    <style type="text/css">
-      body, div {
-        margin: 1em;
-      }
-
-      div.w11k-flash-container {
-        margin: 0;
-      }
-    </style>
 
     <script type="text/javascript">
       var module = angular.module('test', ['w11k.flash']);
 
       module.config(function (w11kFlashConfig) {
-        w11kFlashConfig.templateUrl = '../src/js/w11k-flash.html'
+        w11kFlashConfig.templateUrl = '../src/js/w11k-flash.tpl.html'
       });
 
       module.controller('TestCtrl', function ($scope) {
@@ -28,11 +19,17 @@
           visible: false,
           config: {
             swfUrl: '../bin-release/test.swf',
-            width: 300,
-            height: 100,
+            width: 600,
+            height: 180,
             callback: function (readyPromise) {
               $scope.flash.ready = readyPromise;
             }
+          }
+        };
+
+        $scope.nonFlash = {
+          style: {
+            height: $scope.flash.config.height + 'px'
           }
         };
 
@@ -40,30 +37,102 @@
           $scope.flash.visible = !$scope.flash.visible;
         };
 
-        $scope.talkToMe = function (name) {
-          return 'Hello, ' + name + '! How are you?';
-        }
+        $scope.me = {
+          name: 'AngularJS'
+        };
+
+        $scope.talkToMe = function (message) {
+          $scope.message = message;
+          $scope.response = 'Hello! My name is ' + $scope.me.name + '.'
+
+          return $scope.response;
+        };
+
+        $scope.talkToFlex = function () {
+          if (angular.isDefined($scope.flash.ready)) {
+            $scope.flash.ready.then(function (flash) {
+              $scope.message = 'Hello! My name is ' + $scope.me.name + '. What is your name?';
+              // call exposed ActionScript function
+              $scope.response = flash.talkToMe($scope.message);
+            });
+          }
+        };
 
         $scope.navigateFlashTo = function (state) {
-          $scope.flash.ready.then(function (flash) {
-            // call exposed ActionScript function
-            flash.navigateTo(state);
-          });
+          if (angular.isDefined($scope.flash.ready)) {
+            $scope.flash.ready.then(function (flash) {
+              // call exposed ActionScript function
+              flash.navigateTo(state);
+            });
+          }
         };
       });
     </script>
 
   </head>
   <body ng-app="test" ng-controller="TestCtrl">
-    <div>
-      <button ng-click="toggle()">Toggle Flash Visible</button>
-      <button ng-click="navigateFlashTo('default')">Default Content</button>
-      <button ng-click="navigateFlashTo('content1')">Content 1</button>
-      <button ng-click="navigateFlashTo('content2')">Content 2</button>
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1>w11k-flash - Test Page</h1>
     </div>
-    <div>Header</div>
-    <div ng-hide="flash.visible">No Flash Content</div>
-    <div w11k-flash="flash.config" w11k-flash-visible="flash.visible"></div>
-    <div>Footer</div>
+  </div>
+
+  <div class="container">
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-4 col-md-3">
+          <div class="form-group">
+            <label>Toggle Flash Visibility</label><br>
+            <button class="btn btn-default" ng-click="toggle()">
+              <span ng-show="flash.visible">Hide</span>
+              <span ng-hide="flash.visible">Show</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-8 col-md-9">
+          <div class="form-group">
+            <label>Switch Flash Content</label><br/>
+            <div class="btn-group">
+              <button class="btn btn-default" ng-click="navigateFlashTo('default')">Conversation</button>
+              <button class="btn btn-default" ng-click="navigateFlashTo('content1')">Content 1</button>
+              <button class="btn btn-default" ng-click="navigateFlashTo('content2')">Content 2</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="well">
+      <div ng-hide="flash.visible" ng-style="nonFlash.style">
+        <h4>Non-Flash Content</h4>
+        Content rendered by AngularJS
+      </div>
+      <div w11k-flash="flash.config" w11k-flash-visible="flash.visible"></div>
+    </div>
+
+    <div class="well">
+      <div class="form-group">
+        <label for="me.name">My Name</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="me.name" ng-model="me.name" placeholder="Please enter your name" />
+          <span class="input-group-addon" ng-click="talkToFlex()">Talk to Flex</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <div>{{message}}</div>
+      </div>
+
+      <div class="form-group">
+        <label>Response</label>
+        <div>{{response}}</div>
+      </div>
+    </div>
+  </div>
+
+
+
   </body>
 </html>
