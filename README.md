@@ -32,7 +32,7 @@ There are two types of usage:
 </div>
 ```
 
-Pass a config object via `w11k-flash` attribute. This config object has to have a property `swfUrl` refenrencing the flash file to load. 
+Pass a config object via `w11k-flash` attribute. This config object has to have a property `swfUrl` referencing the flash file to load. 
 You can also pass `flashvars`, `params`, `attributes`, `width` and `height` via the config object. These values are passed to swfobject. See [https://code.google.com/p/swfobject](https://code.google.com/p/swfobject/) for more information.
 
 With the `w11k-flash-visible` attribute you can show and hide the Flash/Flex application. The Flash file is loaded lazy and once. If `w11k-flash-visible` changes from true to false, the Flash object will be invisible but not removed. If `w11k-flash-visible` evaluates to true later on, the Flash object will be visible again without reinitialization.
