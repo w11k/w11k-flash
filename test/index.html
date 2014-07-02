@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../bower_components/swfobject/swfobject/swfobject.js"></script>
+    <script type="text/javascript" src="../src/js/w11k-flash.js"></script>
+
+    <link rel="stylesheet" href="../src/js/w11k-flash.css"/>
+
+    <style type="text/css">
+      body, div {
+        margin: 1em;
+      }
+
+      div.w11k-flash-container {
+        margin: 0;
+      }
+    </style>
+
+    <script type="text/javascript">
+      var module = angular.module('test', ['w11k.flash']);
+
+      module.config(function (w11kFlashConfig) {
+        w11kFlashConfig.templateUrl = '../src/js/w11k-flash.html'
+      });
+
+      module.controller('TestCtrl', function ($scope) {
+        $scope.flash = {
+          visible: false,
+          config: {
+            swfUrl: '../bin-release/test.swf',
+            width: 300,
+            height: 100,
+            callback: function (readyPromise) {
+              $scope.flash.ready = readyPromise;
+            }
+          }
+        };
+
+        $scope.toggle = function () {
+          $scope.flash.visible = !$scope.flash.visible;
+        };
+
+        $scope.talkToMe = function (name) {
+          return 'Hello, ' + name + '! How are you?';
+        }
+
+        $scope.navigateFlashTo = function (state) {
+          $scope.flash.ready.then(function (flash) {
+            // call exposed ActionScript function
+            flash.navigateTo(state);
+          });
+        };
+      });
+    </script>
+
+  </head>
+  <body ng-app="test" ng-controller="TestCtrl">
+    <div>
+      <button ng-click="toggle()">Toggle Flash Visible</button>
+      <button ng-click="navigateFlashTo('default')">Default Content</button>
+      <button ng-click="navigateFlashTo('content1')">Content 1</button>
+      <button ng-click="navigateFlashTo('content2')">Content 2</button>
+    </div>
+    <div>Header</div>
+    <div ng-hide="flash.visible">No Flash Content</div>
+    <div w11k-flash="flash.config" w11k-flash-visible="flash.visible"></div>
+    <div>Footer</div>
+  </body>
+</html>

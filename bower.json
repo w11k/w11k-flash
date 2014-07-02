@@ -1,0 +1,25 @@
+{
+  "name": "w11k-flash",
+  "description": "AngularJS module to include flash movies or flex applications",
+  "keywords": [ "angular", "angularjs", "flash", "flex", "migration" ],
+  "homepage": "https://github.com/w11k/w11k-flash",
+
+  "authors": [
+    { "name": "WeigleWilczek GmbH", "url": "http://www.w11k.com" },
+    { "name": "Philipp Burgmer" }
+  ],
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/w11k/w11k-flash.git"
+  },
+
+  "licenses": {
+    "type": "MIT"
+  },
+
+  "dependencies": {
+    "angular": "1.2.x",
+    "swfobject": "https://github.com/swfobject/swfobject/archive/2.2.zip"
+  }
+}

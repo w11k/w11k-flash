@@ -1,0 +1,10 @@
+.idea
+*.iml
+
+dist
+node_modules
+
+.DS_Store
+.sass-cache
+bower_components
+bin-debug
