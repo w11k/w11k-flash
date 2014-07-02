@@ -30,25 +30,25 @@
 			}
 			
 			protected function talkToMe(message :String) :String {
-				lastMessageFromAngular = message;
-				lastMessageToAngular = 'Hello! My name is ' + myName + '.';
+				this.message = message;
+				response = 'Hello! My name is ' + myName + '.';
 				
-				return lastMessageToAngular;
+				return response;
 			}
 			
 			[Bindable]
-			private var lastMessageFromAngular :String = "";
+			private var message :String = "";
 			
 			
 			[Bindable]
-			private var lastMessageToAngular :String = "";
+			private var response :String = "";
 			
 			[Bindable]
 			private var myName :String = "Flex";
 			
 			protected function button_clickHandler() :void {
-				lastMessageToAngular = 'Hello! My name is ' + myName + '. What is your name?';
-				lastMessageFromAngular = angularjs.call('talkToMe(message)', { message: lastMessageToAngular });
+				message = 'Hello! My name is ' + myName + '. What is your name?';
+				response = angularjs.call('talkToMe(message)', { message: message });
 			}
 			
 		]]>
@@ -73,11 +73,11 @@
 					<s:Button click="button_clickHandler()">Talk to AngularJS</s:Button>
 				</s:HGroup>
 				
-				<s:Label>Last Message from AngularJS: </s:Label>
-				<s:Label text="{lastMessageFromAngular}" />
+				<s:Label>Message:</s:Label>
+				<s:Label text="{message}" />
 				
-				<s:Label>Last Message to AngularJS: </s:Label>
-				<s:Label text="{lastMessageToAngular}" />
+				<s:Label>Response:</s:Label>
+				<s:Label text="{response}" />
 			</s:VGroup>
 			<s:Label includeIn="content1">Content 1</s:Label>
 			<s:Label includeIn="content2">Content 2</s:Label>

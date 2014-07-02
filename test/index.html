@@ -42,18 +42,18 @@
         };
 
         $scope.talkToMe = function (message) {
-          $scope.lastMessageFromFlex = message;
-          $scope.lastMessageToFlex = 'Hello! My name is ' + $scope.me.name + '.'
+          $scope.message = message;
+          $scope.response = 'Hello! My name is ' + $scope.me.name + '.'
 
-          return $scope.lastMessageToFlex;
+          return $scope.response;
         };
 
         $scope.talkToFlex = function () {
           if (angular.isDefined($scope.flash.ready)) {
             $scope.flash.ready.then(function (flash) {
-              $scope.lastMessageToFlex = 'Hello! My name is ' + $scope.me.name + '. What is your name?';
+              $scope.message = 'Hello! My name is ' + $scope.me.name + '. What is your name?';
               // call exposed ActionScript function
-              $scope.lastMessageFromFlex = flash.talkToMe($scope.lastMessageToFlex);
+              $scope.response = flash.talkToMe($scope.message);
             });
           }
         };
@@ -121,17 +121,13 @@
       </div>
 
       <div class="form-group">
-        <label>Last Message from Flex</label>
-        <div ng-show="lastMessageFromFlex">
-          {{lastMessageFromFlex}}
-        </div>
+        <label>Message</label>
+        <div>{{message}}</div>
       </div>
 
       <div class="form-group">
-        <label>Last Message to Flex</label>
-        <div ng-show="lastMessageToFlex">
-          {{lastMessageToFlex}}
-        </div>
+        <label>Response</label>
+        <div>{{response}}</div>
       </div>
     </div>
   </div>
