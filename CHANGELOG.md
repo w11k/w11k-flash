@@ -1,6 +1,15 @@
 # w11k-flash Changelog
 
 
+<a name="0.1.3"></a>
+## 0.1.3 (2014-07-02)
+
+
+### Bug Fixes
+
+* **code:** add angular-array-notation to survive code uglify ([d81b9ed9](https://github.com/w11k/w11k-flash/commit/d81b9ed9e18a9e7c7efa9ce07235f148b1388152))
+
+
 <a name="0.1.2"></a>
 ## 0.1.2 (2014-07-02)
 
