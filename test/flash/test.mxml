@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/mx" width="300" height="100"
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="600" height="200"
 			   creationComplete="application_creationCompleteHandler(event)"
 			   >
 	
@@ -19,6 +19,7 @@
 				angularjs = AngularJSAdapter.getInstance();
 				
 				this.currentState = defaultState.name;
+				ExternalInterface.addCallback("talkToMe", talkToMe);
 				ExternalInterface.addCallback("navigateTo", setState);
 				
 				angularjs.fireFlashReady();
@@ -28,14 +29,26 @@
 				this.currentState = state;
 			}
 			
+			protected function talkToMe(message :String) :String {
+				lastMessageFromAngular = message;
+				lastMessageToAngular = 'Hello! My name is ' + myName + '.';
+				
+				return lastMessageToAngular;
+			}
+			
 			[Bindable]
-			private var text :String = "";
+			private var lastMessageFromAngular :String = "";
+			
+			
+			[Bindable]
+			private var lastMessageToAngular :String = "";
+			
+			[Bindable]
+			private var myName :String = "Flex";
 			
 			protected function button_clickHandler() :void {
-				text = "";
-				text += angularjs.call('talkToMe("Flex")');
-				text += " ";
-				text += angularjs.call('talkToMe(name)', { name: 'Again' });
+				lastMessageToAngular = 'Hello! My name is ' + myName + '. What is your name?';
+				lastMessageFromAngular = angularjs.call('talkToMe(message)', { message: lastMessageToAngular });
 			}
 			
 		]]>
@@ -47,12 +60,29 @@
 		<s:State name="content2" />
 	</s:states>
 	
-	<s:Group width="100%" height="100%" textAlign="center">
-		<s:VGroup includeIn="default" width="100%" height="100%">
-			<s:Button click="button_clickHandler()">Talk to AngularJS</s:Button>
-			<s:Label text="{text}" />
-		</s:VGroup>
-		<s:Label includeIn="content1">Content 1</s:Label>
-		<s:Label includeIn="content2">Content 2</s:Label>
-	</s:Group>
+	<s:VGroup paddingBottom="5" paddingTop="5" paddingLeft="5" paddingRight="5">
+		<s:HGroup paddingBottom="10">
+			<s:Label fontSize="18">Flash Content</s:Label>
+		</s:HGroup>
+		<s:Group width="100%" height="100%">
+			<s:VGroup includeIn="default" width="100%" height="100%">
+				<s:HGroup>
+					<s:FormItem label="My Name:">
+						<s:TextInput text="@{myName}" width="200" />
+					</s:FormItem>
+					<s:Button click="button_clickHandler()">Talk to AngularJS</s:Button>
+				</s:HGroup>
+				
+				<s:Label>Last Message from AngularJS: </s:Label>
+				<s:Label text="{lastMessageFromAngular}" />
+				
+				<s:Label>Last Message to AngularJS: </s:Label>
+				<s:Label text="{lastMessageToAngular}" />
+			</s:VGroup>
+			<s:Label includeIn="content1">Content 1</s:Label>
+			<s:Label includeIn="content2">Content 2</s:Label>
+		</s:Group>
+	</s:VGroup>
+	
+	
 </s:Application>
