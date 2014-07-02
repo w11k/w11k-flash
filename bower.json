@@ -1,5 +1,6 @@
 {
   "name": "w11k-flash",
+  "version": "0.1.1",
   "description": "AngularJS module to include flash movies or flex applications",
   "keywords": [ "angular", "angularjs", "flash", "flex", "migration" ],
   "homepage": "https://github.com/w11k/w11k-flash",
