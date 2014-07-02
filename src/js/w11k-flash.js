@@ -67,7 +67,7 @@ angular.module('w11k.flash').run(function ($window, w11kFlashRegistry) {
 angular.module('w11k.flash').constant('w11kFlashConfig', {
   templateUrl: 'w11k-flash.tpl.html',
   swfObject: {
-    minFlashVersion: '10.2.0',
+    minFlashVersion: '14.0.0',
     width: 800,
     height: 600,
     flashvars: {
