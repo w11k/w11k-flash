@@ -61,7 +61,7 @@ module.exports = function (grunt) {
     html2js: {
       template: {
         options: {
-          base: 'src',
+          base: 'src/js',
           module: 'w11k.flash.template',
           quoteChar: '\'',
           htmlmin: {
