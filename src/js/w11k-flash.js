@@ -3,11 +3,11 @@
 angular.module('w11k.flash', []);
 
 // register swfobject as service to be able to mock it
-angular.module('w11k.flash').factory('swfobject', function ($window) {
+angular.module('w11k.flash').factory('swfobject', ['$window', function ($window) {
   return $window.swfobject;
-});
+}]);
 
-angular.module('w11k.flash').factory('w11kFlashRegistry', function () {
+angular.module('w11k.flash').factory('w11kFlashRegistry', [function () {
   var flashIdPrefix = 'w11k-flash-id-';
   var flashIdCounter = 0;
   var flashMap = {};
@@ -26,9 +26,9 @@ angular.module('w11k.flash').factory('w11kFlashRegistry', function () {
       return flashMap[flashId];
     }
   };
-});
+}]);
 
-angular.module('w11k.flash').run(function ($window, w11kFlashRegistry) {
+angular.module('w11k.flash').run(['$window', 'w11kFlashRegistry', function ($window, w11kFlashRegistry) {
   if (angular.isFunction($window.w11kFlashIsReady) === false) {
     $window.w11kFlashIsReady = function (flashId) {
       var flash = w11kFlashRegistry.getFlash(flashId);
@@ -40,9 +40,9 @@ angular.module('w11k.flash').run(function ($window, w11kFlashRegistry) {
       }
     };
   }
-});
+}]);
 
-angular.module('w11k.flash').run(function ($window, w11kFlashRegistry) {
+angular.module('w11k.flash').run(['$window', 'w11kFlashRegistry', function ($window, w11kFlashRegistry) {
   if (angular.isFunction($window.w11kFlashCall) === false) {
     $window.w11kFlashCall = function (flashId, expression, locals) {
       var flash = w11kFlashRegistry.getFlash(flashId);
@@ -52,7 +52,8 @@ angular.module('w11k.flash').run(function ($window, w11kFlashRegistry) {
         // we have to evaluate the expression outside of the apply function,
         // otherwise we are unable to return the result to flash
         var result = scope.$eval(expression, locals);
-        scope.$apply(function () { });
+        scope.$apply(function () {
+        });
 
         return result;
       }
@@ -61,7 +62,7 @@ angular.module('w11k.flash').run(function ($window, w11kFlashRegistry) {
       }
     };
   }
-});
+}]);
 
 // extract config from directive and define overridable defaults
 angular.module('w11k.flash').constant('w11kFlashConfig', {
@@ -73,7 +74,7 @@ angular.module('w11k.flash').constant('w11kFlashConfig', {
   }
 });
 
-angular.module('w11k.flash').directive('w11kFlash', function (swfobject, $window, $q, w11kFlashConfig, $timeout, w11kFlashRegistry) {
+angular.module('w11k.flash').directive('w11kFlash', ['swfobject', '$window', '$q', 'w11kFlashConfig', '$timeout', 'w11kFlashRegistry', function (swfobject, $window, $q, w11kFlashConfig, $timeout, w11kFlashRegistry) {
   var deepMerge = function (destination, source) {
     for (var property in source) {
       if (source[property] && source[property].constructor && source[property].constructor === Object) {
@@ -161,8 +162,8 @@ angular.module('w11k.flash').directive('w11kFlash', function (swfobject, $window
 
           swfobject.embedSWF(config.swfUrl,
             flashId,
-            '' + config.width,
-            '' + config.height,
+              '' + config.width,
+              '' + config.height,
             config.minFlashVersion,
             false,
             config.flashvars,
@@ -173,4 +174,4 @@ angular.module('w11k.flash').directive('w11kFlash', function (swfobject, $window
       };
     }
   };
-});
+}]);
