@@ -38,5 +38,9 @@ package w11k.flash {
 		public function call(expression :String, locals :Object = null) :* {
 			return ExternalInterface.call("w11kFlashCall", flashId, expression, locals);
 		}
+
+        public function expose(externalName :String, func :Function) :void {
+            ExternalInterface.addCallback(externalName, func);
+        }
 	}
 }
