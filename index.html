@@ -1,1 +1,72 @@
-<!DOCTYPE html><html ng-app="app"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="description" content="w11k-select is an AngularJS directive created to replace the default HTML select element!"><meta name="viewport" content="width=device-width"><title>w11k-flash | Flash/Flex Integration for AngularJS</title><link rel="stylesheet" type="text/css" href="0.1.0/main.css"></head><body><div class="jumbotron"><div class="container"><h1>w11k-flash</h1><p>w11k-flash is an AngularJS module providing a directive to include flash movies and flex applications into your AngularJS application as well as thin communication layer for Flash/Flex and AngularJS. Integrating a Flex application into an AngularJS application is a common usecase of a step-by-step migration of a Flex application to AngularJS.</p></div></div><div class="container"><h2>Conversation Demo</h2><div ng-controller="DemoCtrl"><div class="well"><div class="row"><div class="col-sm-4 col-md-3"><div class="form-group"><label>Toggle Flash Visibility</label><br><button class="btn btn-default" ng-click="toggle()"><span ng-show="flash.visible">Hide</span> <span ng-hide="flash.visible">Show</span></button></div></div><div class="col-sm-8 col-md-9"><div class="form-group"><label>Switch Flash Content</label><br><div class="btn-group"><button class="btn btn-default" ng-click="navigateFlashTo('default')">Conversation</button> <button class="btn btn-default" ng-click="navigateFlashTo('content1')">Content 1</button> <button class="btn btn-default" ng-click="navigateFlashTo('content2')">Content 2</button></div></div></div></div></div><div class="well"><div ng-hide="flash.visible"><h4>Non-Flash Content</h4>Content rendered by AngularJS</div><div w11k-flash="flash.config" w11k-flash-visible="flash.visible"></div></div><div class="well"><div class="form-group"><label for="me.name">My Name</label><div class="input-group"><input type="text" class="form-control" id="me.name" ng-model="me.name" placeholder="Please enter your name"><span class="input-group-addon" ng-click="talkToFlex()">Talk to Flex</span></div></div><div class="form-group"><label>Message</label><div>{{message}}</div></div><div class="form-group"><label>Response</label><div>{{response}}</div></div></div></div></div><script type="text/javascript" src="0.1.0/main.js"></script></body></html>
+<!DOCTYPE html><html ng-app="app"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="description" content="w11k-select is an AngularJS directive created to replace the default HTML select element!"><meta name="viewport" content="width=device-width"><title>w11k-flash | Flash/Flex Integration for AngularJS</title><link rel="stylesheet" type="text/css" href="0.1.5/main.css"></head><body><div class="jumbotron"><div class="container"><h1>w11k-flash</h1><p>w11k-flash is an AngularJS module providing a directive to include flash movies and flex applications into your AngularJS application as well as thin communication layer for Flash/Flex and<angularjs class=""></angularjs><br>Integrating a Flex application into an AngularJS application is a common usecase of a step-by-step migration of a Flex application to AngularJS.</p><a href="https://github.com/w11k/w11k-flash" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github"></i>&nbsp;View on GitHub</a></div></div><div class="container"><h2>Demo</h2><div ng-controller="DemoCtrl"><div class="well"><div class="row"><div class="col-sm-4 col-md-3"><div class="form-group"><label>Toggle Flash Visibility</label><br><button class="btn btn-default" ng-click="toggle()"><span ng-show="flash.visible">Hide</span> <span ng-hide="flash.visible">Show</span></button></div></div><div class="col-sm-8 col-md-9"><div class="form-group"><label>Switch Flash Content</label><br><div class="btn-group"><button class="btn btn-default" ng-click="navigateFlashTo('default')">Conversation</button> <button class="btn btn-default" ng-click="navigateFlashTo('content1')">Content 1</button> <button class="btn btn-default" ng-click="navigateFlashTo('content2')">Content 2</button></div></div></div></div></div><div class="well"><div ng-hide="flash.visible"><h4>Non-Flash Content</h4>Content rendered by AngularJS</div><div w11k-flash="flash.config" w11k-flash-visible="flash.visible"></div></div><div class="well"><div class="form-group"><label for="me.name">My Name</label><div class="input-group"><input type="text" class="form-control" id="me.name" ng-model="me.name" placeholder="Please enter your name"><span class="input-group-addon" ng-click="talkToFlex()">Talk to Flex</span></div></div><div class="form-group"><label>Message</label><div>{{message}}</div></div><div class="form-group"><label>Response</label><div>{{response}}</div></div></div></div><h2>Installation</h2><ul><li>Install <code>w11k-flash</code> and its dependencies via Bower</li><li>Include scripts into your application (<code>w11k-flash</code> and <code>swfobject</code>)</li><li>Add dependency to <code>w11k.flash</code> and <code>w11k.flash.template</code> to your AngularJS module</li><li>Include <code>w11k-flash</code> stylesheet</li></ul><h2>Basic Usage</h2><p>Basic usage means you include your Flex application and toggle its visibility but do not communicate with Flex from your AngularJS code nor vice versa.</p><ol class="step-by-step-instructions"><li>Define a controller:<pre w11k-pretty-print="" lang="js" title="AngularJS Code:">
+angular.module('app').controller('DemoCtrl', function ($scope) {
+  $scope.flash = {
+    visible: false,
+    config: {
+      swfUrl: 'pathTo/your.swf',
+      width: 600,
+      height: 180
+    }
+  };
+
+  $scope.toggle = function () {
+    $scope.flash.visible = !$scope.flash.visible;
+  };
+});
+</pre></li><li>Use the controller together with the w11k-flash directive in your template.<br><br>Pass the config object stored in <code>flash.config</code> via <code>w11k-flash</code> attribute to the directive. This config object has to have a property `swfUrl` referencing the flash file to load. You can also pass properties <code>flashvars</code>, <code>params</code>, <code>attributes</code>, <code>width</code> and <code>height</code> via the config object. These values are passed to swfobject. See <a href="https://code.google.com/p/swfobject" target="_blank">https://code.google.com/p/swfobject</a> for more information.<br><br>With the <code>w11k-flash-visible</code> attribute you can show and hide the Flash/Flex application. The Flash file is loaded lazy and once. If <code>w11k-flash-visible</code> changes from true to false, the Flash object will be invisible but not removed. If <code>w11k-flash-visible</code> evaluates to true later on, the Flash object will be visible again without reinitialization.<pre w11k-pretty-print="" lang="html" title="AngularJS Template:">
+&lt;div ng-controller=&quot;DemoCtrl&quot;&gt;
+  &lt;div w11k-flash=&quot;flash.config&quot; w11k-flash-visible=&quot;flash.visible&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre></li></ol><h2>Control Flow Basic Usage</h2><a href="0.1.5/assets/images/w11k-flash-sequence-diagram-basic-usage.svg" target="_blank"><img src="0.1.5/assets/images/w11k-flash-sequence-diagram-basic-usage.svg" alt="w11k-flash Sequence Diagram - Basic Usage" class="img-responsive" style="max-width: 800px; margin: 0 auto"></a><h2>Advanced Usage</h2><p>In addition to steps described in <i>Basic Usage</i>:</p><ol class="step-by-step-instructions"><li>Add a callback to your flash config object. This callback is called with a promise as parameter after the directive included the flex into the page. The promise will be resolved with a reference to the flash object when the Flex application calls <code>AngularJSAdapter#fireFlashReady</code> (see next step). Save a reference to the promise in your scope or controller instance to be able to use it later on.<pre w11k-pretty-print="" lang="js" title="AngularJS Code (shortened):">
+angular.module('app').controller('DemoCtrl', function ($scope) {
+  $scope.flash = {
+    config: {
+      callback: function(flashReadyPromise) {
+        $scope.flash.ready = flashReadyPromise;
+      }
+    }
+  };
+});
+</pre></li><li>Use <code>AngularJSAdapter</code> for communication with the AngularJS application in your Flex code. During initialization expose functions you want to be able to call from your AngularJS code. Then call <code>AngularJSAdapter#fireFlashReady</code> to inform AngularJS about finish of initialization.<pre w11k-pretty-print="" lang="as" title="Flex Code (excerpt):">
+private var angularjs :AngularJSAdapter;
+
+protected function talkToFlex(text :String) :String {
+  // do something with text
+  return 'Hello! My name is Flex.';
+}
+
+protected function application_creationCompleteHandler(event :FlexEvent) :void {
+  // do all the initialization and then
+  angularjs = AngularJSAdapter.getInstance();
+  angularjs.expose("talkToFlex", talkToFlex);
+  angularjs.fireFlashReady();
+}
+</pre></li><li>You can call all functions assigned to current scope (including scope hierarchy) from your Flex code. More precisely: You can evaluate expressions against the current scope. So assign functions you want to be able to call from your Flex code to the scope.<pre w11k-pretty-print="" lang="js" title="AngularJS Code (shortened):">
+angular.module('app').controller('DemoCtrl', function ($scope) {
+   $scope.talkToAngular = function (text) {
+    // do something with text
+    return 'Hello, my name is AngularJS';
+  }
+});
+</pre></li><li>Call an AngularJS function from your Flex code via <code>AngularJSAdapter#call</code>. <code>call</code> expect one mandatory and one optional parameter: the expression to evaluate and a map (locals) to resolve parameters within the expression.<pre w11k-pretty-print="" lang="as" title="Flex Code (excerpt):">
+angularjs.call('talkToAngular("Hello")');
+angularjs.call('talkToAngular(text)', {text: 'Hello'});
+</pre></li><li>To call functions exposed by your Flex application from your AngularJS code, use the promise received by the config callback and its resolved value, a reference to the flash object.<pre w11k-pretty-print="" lang="js" title="AngularJS Code (shortened):">
+angular.module('app').controller('DemoCtrl', function ($scope) {
+   $scope.talkToFlex = function (text) {
+    if (angular.isDefined($scope.flash.ready)) {
+      $scope.flash.ready.then(function (flashRef) {
+        $scope.responseFromFlex = flashRef.talkToFlex(text);
+      });
+    }
+  }
+});
+</pre></li></ol><h2>Control Flow Advanced Usage</h2><a href="0.1.5/assets/images/w11k-flash-sequence-diagram.svg" target="_blank"><img src="0.1.5/assets/images/w11k-flash-sequence-diagram.svg" alt="w11k-flash Sequence Diagram - Advanced Usage" class="img-responsive"></a><h2>Additional Options</h2><ul class="step-by-step-instructions"><li>Instead of configuring each directive instance by its own, you can use the constant <code>w11kFlashConfig</code> to share common configuration. Common configuration and instance configuration will be merged and instance configuration overrides common configuration.<pre w11k-pretty-print="" lang="js" title="AngularJS Code:">
+angular.module('app').config(function (w11kFlashConfig) {
+  w11kFlashConfig.config.swfObject.minFlashVersion = '13.1.17';
+});
+</pre></li><li><code>w11kFlashConfig</code> can be used also to configure the path to the template the directive should use via <code>templateUrl</code>. This is an alternative to define a dependency to the <code>w11k.flash.template</code> module.<pre w11k-pretty-print="" lang="js" title="AngularJS Code:">
+angular.module('app').config(function (w11kFlashConfig) {
+  w11kFlashConfig.templateUrl = 'pathTo/w11k-flash.tpl.html'
+});
+</pre></li></ul><h2>License & Copyright</h2><p>w11k-flash is licensed under <a href="https://github.com/w11k/w11k-flash/blob/master/LICENSE" target="_blank">MIT</a>.</p><p>w11k-flash is developed and maintained by <a href="http://www.w11k.com" target="_blank">WeigleWilczek</a> and Philipp Burgmer. All rights reserved.</p></div><script type="text/javascript" src="0.1.5/main.js"></script></body></html>
