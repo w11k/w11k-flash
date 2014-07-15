@@ -1,3 +1,8 @@
 w11k-flash.iml
 node_modules
 .sass-cache
+bower_components
+dist
+.actionScriptProperties
+.flexProperties
+bin-debug
