@@ -1,6 +1,15 @@
 # w11k-flash Changelog
 
 
+<a name="0.1.4"></a>
+### 0.1.4 (2014-07-15)
+
+
+#### Features
+
+* **flex:** add AngularJSAdapter#expose to hide ExternalInterface completely ([7c913786](https://github.com/w11k/w11k-flash/commit/7c91378677fe1d0fff4400e3400f433c065e661e))
+
+
 <a name="0.1.3"></a>
 ## 0.1.3 (2014-07-02)
 
