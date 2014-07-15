@@ -8,7 +8,6 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
-			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			
 			import w11k.flash.AngularJSAdapter;
@@ -19,9 +18,9 @@
 				angularjs = AngularJSAdapter.getInstance();
 				
 				this.currentState = defaultState.name;
-				ExternalInterface.addCallback("talkToMe", talkToMe);
-				ExternalInterface.addCallback("navigateTo", setState);
-				
+				angularjs.expose("talkToMe", talkToMe);
+				angularjs.expose("navigateTo", setState);
+		
 				angularjs.fireFlashReady();
 			}
 			
