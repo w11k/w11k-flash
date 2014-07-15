@@ -1,11 +1,26 @@
 # w11k-flash Changelog
 
 
+<a name="0.1.5"></a>
+## 0.1.5 (2014-07-15)
+
+
+### Bug Fixes
+
+* **test:** use AngularJSAdapter#expose instead of ExternalInterface.addCallback in test.mxm ([a1c49cdd](https://github.com/w11k/w11k-flash/commit/a1c49cdd99afd339744d0be1b853b680e7e9a5d7))
+
+
+### Features
+
+* **readme:** remove installation and usage instructions from readme, now on github page ([18d091c](https://github.com/w11k/w11k-flash/commit/18d091c91016e45630b378062538e672d050603c))
+
+
+
 <a name="0.1.4"></a>
-### 0.1.4 (2014-07-15)
+## 0.1.4 (2014-07-15)
 
 
-#### Features
+### Features
 
 * **flex:** add AngularJSAdapter#expose to hide ExternalInterface completely ([7c913786](https://github.com/w11k/w11k-flash/commit/7c91378677fe1d0fff4400e3400f433c065e661e))
 
