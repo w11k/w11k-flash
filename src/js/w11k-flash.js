@@ -116,23 +116,36 @@ angular.module('w11k.flash').directive('w11kFlash', ['swfobject', '$window', '$q
 
       });
 
+      var flashId = w11kFlashRegistry.getFlashId();
+
+      var customConfig = scope.$eval(attrs.w11kFlash);
+
+      var config = {
+        flashvars: {},
+        params: {},
+        attributes: {}
+      };
+
+      deepMerge(config, w11kFlashConfig.swfObject);
+      deepMerge(config, customConfig);
+
+      config.flashvars.w11kFlashId = flashId;
+
+      var deferred = $q.defer();
+
+      w11kFlashRegistry.registerFlash(flashId, {
+        deferred: deferred,
+        element: element
+      });
+
+      scope.$on('$destroy', function () {
+        w11kFlashRegistry.unregisterFlash(flashId);
+      });
+
+      if (angular.isFunction(config.callback)) {
+        config.callback(deferred.promise);
+      }
       var includeFlash = function () {
-
-        var customConfig = scope.$eval(attrs.w11kFlash);
-
-        var flashId = w11kFlashRegistry.getFlashId();
-
-        var config = {
-          flashvars: {},
-          params: {},
-          attributes: {}
-        };
-
-        deepMerge(config, w11kFlashConfig.swfObject);
-        deepMerge(config, customConfig);
-
-        config.flashvars.w11kFlashId = flashId;
-
         flashContainer.append(flashElement);
         flashElement.attr('id', flashId);
 
@@ -142,20 +155,13 @@ angular.module('w11k.flash').directive('w11kFlash', ['swfobject', '$window', '$q
           flashElement.css('min-width', config.width);
 
           var callback = function (event) {
-            var deferred = $q.defer();
+            var flash = w11kFlashRegistry.getFlash(flashId);
 
-            w11kFlashRegistry.registerFlash(flashId, {
-              deferred: deferred,
-              object: event.ref,
-              element: element
-            });
-
-            scope.$on('$destroy', function () {
-              w11kFlashRegistry.unregisterFlash(flashId);
-            });
-
-            if (angular.isFunction(config.callback)) {
-              config.callback(deferred.promise);
+            if (event.success) {
+              flash.object = event.ref;
+            }
+            else {
+              flash.deferred.reject();
             }
           };
 
