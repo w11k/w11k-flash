@@ -49,11 +49,10 @@ angular.module('w11k.flash').run(['$window', 'w11kFlashRegistry', function ($win
       if (angular.isDefined(flash)) {
         var scope = flash.element.scope();
 
-        // we have to evaluate the expression outside of the apply function,
+        // we have to evaluate the expression outside of an apply-function,
         // otherwise we are unable to return the result to flash
         var result = scope.$eval(expression, locals);
-        scope.$apply(function () {
-        });
+        scope.$digest();
 
         return result;
       }
