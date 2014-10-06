@@ -1,6 +1,6 @@
 {
   "name": "w11k-flash",
-  "version": "0.1.5",
+  "version": "0.1.6",
 
   "description": "AngularJS module to include flash movies or flex applications",
   "keywords": [ "angular", "angularjs", "flash", "flex", "migration" ],

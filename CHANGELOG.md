@@ -1,6 +1,20 @@
 # w11k-flash Changelog
 
 
+<a name="0.1.6"></a>
+## 0.1.6 (2014-10-07)
+
+
+### Bug Fixes
+
+* **promise:** call callback with promise on directive link phase not on including flash ([b7c6ce53](https://github.com/w11k/w11k-flash/commit/b7c6ce5334aa89374a7c38e627ef43ad0620def8))
+
+### Performance
+
+* **scope:** use scope.$digest instead of scope.$apply to not trigger digest on rootScope ([4843f3d](https://github.com/w11k/w11k-flash/commit/4843f3d7d471466f899dc6348e9aa47d289c8132))
+
+
+
 <a name="0.1.5"></a>
 ## 0.1.5 (2014-07-15)
 
