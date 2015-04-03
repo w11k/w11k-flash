@@ -8,6 +8,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-bump');
@@ -75,6 +76,20 @@ module.exports = function (grunt) {
           src: '**/*.scss',
           dest: 'dist/js'
         }]
+      },
+      less: {
+        src: 'src/js/w11k-flash.less',
+        dest: 'dist/js/w11k-flash.less'
+      }
+    },
+    less: {
+      dist: {
+        options: {
+          paths: ['src/js']
+        },
+        files: {
+          'temp/w11k-flash.less.css': 'src/js/w11k-flash.less'
+        }
       }
     },
     html2js: {
@@ -131,5 +146,5 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['clean', 'jshint:src', 'sass', 'copy', 'html2js', 'uglify']);
+  grunt.registerTask('build', ['clean', 'jshint:src', 'sass', 'less', 'copy', 'html2js', 'uglify']);
 };
