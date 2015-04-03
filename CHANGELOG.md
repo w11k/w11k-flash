@@ -1,8 +1,17 @@
 # w11k-flash Changelog
 
 
+<a name="0.2.0"></a>
+## 0.2.0 (2015-04-03)
+
+
+#### Features
+
+* **styling:** add less support ([5ced5132](https://github.com/w11k/w11k-flash/commit/5ced513285655dddac44ef45f3c2d0cfba1b9b7c))
+
+
 <a name="0.1.7"></a>
-### 0.1.7 (2015-04-03)
+## 0.1.7 (2015-04-03)
 
 
 #### Bug Fixes
