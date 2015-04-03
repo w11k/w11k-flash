@@ -1,6 +1,16 @@
 # w11k-flash Changelog
 
 
+<a name="0.1.7"></a>
+### 0.1.7 (2015-04-03)
+
+
+#### Bug Fixes
+
+* **$compileProvider.debugInfoEnabled:** avoid use of angular.element.scope() ([17eb84e9](https://github.com/w11k/w11k-flash/commit/17eb84e9a69f5c1ea9d1bf80df2bb20232fdbb33))
+* **call-angular-from-flash:** trigger digest on root scope instead of specific scope ([53f77038](https://github.com/w11k/w11k-flash/commit/53f770387d44d2d87177b187af59a6bf8f5331ad))
+
+
 <a name="0.1.6"></a>
 ## 0.1.6 (2014-10-07)
 
