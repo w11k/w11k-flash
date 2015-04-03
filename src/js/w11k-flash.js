@@ -42,17 +42,17 @@ angular.module('w11k.flash').run(['$window', 'w11kFlashRegistry', function ($win
   }
 }]);
 
-angular.module('w11k.flash').run(['$window', 'w11kFlashRegistry', function ($window, w11kFlashRegistry) {
+angular.module('w11k.flash').run(['$window', 'w11kFlashRegistry', '$rootScope', function ($window, w11kFlashRegistry, $rootScope) {
   if (angular.isFunction($window.w11kFlashCall) === false) {
     $window.w11kFlashCall = function (flashId, expression, locals) {
       var flash = w11kFlashRegistry.getFlash(flashId);
       if (angular.isDefined(flash)) {
-        var scope = flash.element.scope();
+        var scope = flash.scope;
 
         // we have to evaluate the expression outside of an apply-function,
         // otherwise we are unable to return the result to flash
         var result = scope.$eval(expression, locals);
-        scope.$digest();
+        $rootScope.$digest();
 
         return result;
       }
@@ -135,7 +135,8 @@ angular.module('w11k.flash').directive('w11kFlash', ['swfobject', '$window', '$q
 
       w11kFlashRegistry.registerFlash(flashId, {
         deferred: deferred,
-        element: element
+        element: element,
+        scope: scope
       });
 
       scope.$on('$destroy', function () {
