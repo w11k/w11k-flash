@@ -1,6 +1,15 @@
 # w11k-flash Changelog
 
 
+<a name="1.0.0"></a>
+## 1.0.0 (2015-11-13)
+
+
+#### Features
+
+* **dependencies:** define dependency to angular as version range from 1.2.0 to 1.5.x ([bcb30a00](https://github.com/w11k/w11k-flash/commit/bcb30a00461cae398d7973f7b7227b81ba223ce4))
+
+
 <a name="0.2.0"></a>
 ## 0.2.0 (2015-04-03)
 
