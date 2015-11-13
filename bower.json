@@ -20,7 +20,7 @@
   },
 
   "dependencies": {
-    "angular": "1.2.x",
+    "angular": ">= 1.2.0 < 1.6.0",
     "swfobject": "https://github.com/swfobject/swfobject/archive/2.2.zip"
   }
 }
